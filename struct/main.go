@@ -3,19 +3,19 @@ package main
 import "fmt"
 
 type Cat struct {
+	name *string
 }
 
 func (c Cat) Run() {
-	fmt.Println("run..")
+	fmt.Println(*c.name, ".. run")
+	name := "alter"
+	c.name = &name
 }
 
 func main() {
-	var cat1 Cat
-	cat1.Run()
-
-	cat2 := new(Cat)
-	cat2.Run()
-
-	fmt.Printf("cat1 pointer is :%v , cat2 pointer is :%v",cat1,*cat2)
-	
+	cat := Cat{}
+	name := "hello"
+	cat.name = &name
+	cat.Run()
+	cat.Run()
 }

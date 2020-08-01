@@ -35,20 +35,25 @@ go
 
 method ในภาษา Go นั้นจะไม่อยู่ใน  struct เหมือนที่ method อยู่ใน class ของ java 
 
-java 
+### non-pointer receiver
 
-    class Cat {
-      public void run() { System.out.println("run...") }
-    }
+การที่ go จะรู้ว่า function run นั้นเป็นของ Cat ได้นั้นจำเป็นต้องมี  (c Cat) เราเรียกสิ่งนี้ว่า receiver แบบไม่มี pointer 
 
-go 
+    type Cat struct {
+        Name string
+     }
 
-    type Cat struct { }
+    func (c Cat) Run() { fmt.Println(c.Name,"is runing.") }
 
-    func (c Cat) Run() { fmt.Println("run...") }
+ข้อดีของ non-pointer receiver นั้นคือ properties ของ struct จะไม่ถูกเปลียนแปลง (Immutable) หาก function ต่่าง ๆ มีการเรียกใช้ properties ของ struct ขึ้นมาและมีการแก้ไข้ state เกิดขึ้นก่อน function นั้นทำงานจบลง 
 
 
-การที่ go จะรู้ว่า function run นั้นเป็นของ Cat ได้นั้นจำเป็นต้องมี  (c Cat) เราเรียกสิ่งนี้ว่า receiver 
+### pointer receiver
+
+    type Cat struct {}
+
+    func (c *Cat) Run() { fmt.Println("run...") }
+
 
 ##  Struct initialization
 
@@ -64,11 +69,11 @@ go
         cat1 := Cat{}
         cat1.Run()
 
-3. ใช้ keyword new ที่ build-in มากับภาษาเพื่อทำการ initialize 
+3. ใช้ keyword new ที่ build-in มากับภาษาเพื่อนำมาใช้ initialize 
    
         cat2 := new(Cat)
         cat2.Run()
 
-    ข้อแต่งต่างของการใช้ new  คือเป็นการ initialize Cat  พร้อมกับ return pointer ของ struct Cat  
+    ข้อแต่งต่างของการใช้ new  คือเป็นการ initialize Cat  พร้อมกับ return pointer ของ struct Cat ซึ่งแตกต่างกับวิธีที่ 1 และ 2 ที่ return แค่ value เท่านั้น
 
   
