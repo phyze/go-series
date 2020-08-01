@@ -45,8 +45,29 @@ method ในภาษา Go นั้นจะไม่อยู่ใน  stru
 
     func (c Cat) Run() { fmt.Println(c.Name,"is runing.") }
 
-ข้อดีของ non-pointer receiver นั้นคือ properties ของ struct จะไม่ถูกเปลียนแปลง (Immutable) หาก function ต่่าง ๆ มีการเรียกใช้ properties ของ struct ขึ้นมาและมีการแก้ไข้ state เกิดขึ้นก่อน function นั้นทำงานจบลง 
+การที่เป็น non-pointer receiver นั้นจะทำให้ properties ของ struct ไม่ถูกเปลียนแปลง (Immutable) หาก function ต่าง ๆ มีการเรียกใช้ properties ของ struct ขึ้นมาและได้แก้ไข้ state เกิดขึ้นก่อน function นั้นทำงานจบลง state ของ properties จะไม่โดนเปลียนไปด้วย ทำให้ไม่กระทบกับการทำงานของ function อื่น (free side-effect) ซึ่งทำให้
+function เหล่านั้นกลายเป็น pure function นั้นเอง
 
+ตัวอย่าง 
+
+    type Cat struct {
+      Name string
+    }
+
+    func (c Cat) Run() { 
+      fmt.Println(c.Name,"is runing.") 
+      c.Name = "alter"
+    }
+
+    func main() {
+      cat := Cat{
+        Name: "nano"
+      }
+      cat.Run() //nano
+      cat.Run() //nano
+    }
+  
+ภายใน function Run ได้มีการ set ชื่อใหม่ให้กับ cat ก่อนจะจบการทำงาน จากนั้นเรียก funtion Run อีกรอบ สิ่งที่ได้คือชื่อไม่ถูกเปลียนแต่ออกมาเป็นชื่อเดิม
 
 ### pointer receiver
 

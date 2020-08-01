@@ -3,19 +3,16 @@ package main
 import "fmt"
 
 type Cat struct {
-	name *string
+	Name string
 }
 
 func (c Cat) Run() {
-	fmt.Println(*c.name, ".. run")
-	name := "alter"
-	c.name = &name
+	fmt.Println(c.Name, ".. run")
+	c.Name = "alter"
 }
 
 func main() {
-	cat := Cat{}
-	name := "hello"
-	cat.name = &name
+	cat := Cat{Name: "nano"}
 	cat.Run()
 	cat.Run()
 }
