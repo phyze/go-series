@@ -8,6 +8,48 @@ import (
 	"github.com/go-series/struct/behavior/ptrReceiver"
 )
 
+func main() {
+	fmt.Println("...Struct Initialization...")
+	StructInitialize()
+	fmt.Println()
+
+	fmt.Println("..Access modifier..")
+	AccessModifier()
+	fmt.Println()
+
+	fmt.Println("...Behavior of Object...")
+	Behavior()
+	fmt.Println()
+
+}
+
+//========================================================================
+//======================  Struct Initialization ==========================
+
+type Cat struct{}
+
+func (c Cat) Run() {
+	fmt.Println("cat is runing")
+}
+
+func StructInitialize() {
+
+	var cat Cat
+	cat1 := Cat{}
+	cat2 := new(Cat)
+	cat.Run()
+	cat1.Run()
+	cat2.Run()
+}
+
+//========================================================================
+//=======================  Access Modifier ===============================
+
+func AccessModifier() {
+	public()
+	private()
+}
+
 func public() {
 	box := accessModifier.Box{
 		Width: 5,
@@ -27,10 +69,8 @@ func private() {
 	// fmt.Println(box)
 }
 
-func AccessModifier() {
-	public()
-	private()
-}
+//========================================================================
+//=====================  Behavior of Object  =============================
 
 func NonPtrReceiver() {
 	cat := nonPtrReceive.Cat{
@@ -55,15 +95,4 @@ func Behavior() {
 	fmt.Println()
 	fmt.Println("pointer receiver...")
 	PtrReceiver()
-}
-
-func main() {
-	fmt.Println("..Access modifier..")
-	AccessModifier()
-	fmt.Println()
-
-	fmt.Println("...Behavior of Object...")
-	Behavior()
-	fmt.Println()
-
 }
