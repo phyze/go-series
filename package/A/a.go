@@ -1,18 +1,9 @@
-package A
+package a
 
-import (
-	"fmt"
+import "fmt"
 
-	"github.com/go-series/package/temp"
-)
+var I = 5
 
-
-func SetKeep() {
-	s := "hello"
-	temp.Keep = s
-}
-
-
-func Print() {
-	fmt.Println(temp.Keep)
+func PrintAddrsI() {
+	fmt.Printf("i addrs is : %p , value is : %v", &I, I)
 }

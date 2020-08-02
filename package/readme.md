@@ -4,8 +4,63 @@
 
 ส่วนการนำไปใข้ ชื่อ package ต้องอ้างอิงตามชื่อ directory  ถ้า directory ชื่อ duck ไพล์ที่อยู่ใน directory duck จะต้องใช้ชื่อ package ว่า duck
 
-package ของ go จะโดน load แค่ครั้งเดียวเท่านั้นทำให้ประหยัด memory ได้มากหากมี package A เรียก package B  go ยินยอมให้มีการ share address ของ package B ไปให้ package A 
-
-
+package ของ go จะโดน load แค่ครั้งเดียวเท่านั้นหากมี package A เรียก package B  go ยินยอมให้มีการ share address ของ package B ไปให้ package A ตามภาพด้านล่าง
 
 ![alt text](github.com/../pkg.jpg)
+
+> NOTE : ควรระวังไว้ก็คือ การเข้าไปเปลียน state ของ package อื่นนั้นอันตรายมากอะไรที่สำคัญควรจะทำการ encapsulate ด้วย
+
+
+## การสร้าง package
+
+> NOTE : การตั้งชื่อ package ต้องขึ้นต้นด้วย lowercase เสมอ
+
+
+main file
+
+    package main
+
+    import (
+      "github.com/go-series/package/a"
+    )
+
+    func main() {
+      a.PrintAddrsI()
+    }
+
+a file 
+
+    package a
+
+    func PrintAddrsI() { ... }
+
+
+
+
+หากมีการสร้าง directory ซ้อน directory ให้ยึดชั้นในสุดเป็นชื่อ package
+
+      root directory
+       - r1
+         - r2
+           - file <-- package is r2
+
+
+## Alies package name
+
+alies เป็นการตั้งชื่อ package ใหม่หลังจาก import เข้ามาหรือสามารถ ignore ก็ได้
+
+### new alies
+
+    package main
+
+    format "fmt"
+
+    func main() {
+      format.Println("hello")
+    }
+
+### ignore package import
+
+นี้ไม่มีไรแค่เติม _ (Underscore) หน้า package ที่ import การ ignore เป็นบอกให้ go ไม่สนใจ package ที่ import มา
+
+    _ "fmt"

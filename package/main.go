@@ -2,16 +2,13 @@ package main
 
 import (
 	"fmt"
-	"time"
 
-	"github.com/go-series/package/A"
-	"github.com/go-series/package/temp"
+	"github.com/go-series/package/a"
+	"github.com/go-series/package/b"
 )
 
-
 func main() {
-	go A.SetKeep()
-	time.Sleep(time.Second)
-	fmt.Println(temp.Keep)
-	A.Print()
+	a.PrintAddrsI()
+	fmt.Println()
+	b.PrintAddrsI()
 }
