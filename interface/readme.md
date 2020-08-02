@@ -43,34 +43,69 @@ interface ในภาษา go ถือว่าเป็น type ชนิด
       fmt.Println("quack quack run run")
     }
 
->  Best Practices : การที่ go เป็น implicit impliment การแตก specifies ออกเป็นส่วน ๆ ทำให้ง่ายต่อการ implement และลดการ implement แบบไม่จำเป็นออกไปซะ
+>  Best Practices : การที่ go เป็น implicit impliment การแตก specifies ออกเป็นส่วน ๆ ช่วยให้ง่ายต่อการ implement และลดการ implement แบบไม่จำเป็นออกไปซะ
 
 การเขียน specification ที่ดีในภาษา go interface ควรจะเล็กเท่าที่เป็นไปได้แยกให้มันเป็นแต่ละหน้าที่ของมันเองจากนั้นให้ใช้การ composition รวมแต่ละ interface เข้ามาเป็น interface เดียวกัน
 
 ยกตัวอย่าง 
 
-    type FileSystem interface {
-      Read() ([]byte,error)
-      Write([]byte) error
-      Close() error
+    type Duck interface {
+      Run()
+      Walk()
     }
 
 แยกเป็น
 
-    type Reader interface {
-      Read() ([]byte,error)
+    type IDuck interface {
+      Running
+      Walking
     }
 
-    type Writer interface {
-      Write([]byte) error 
+    type Running interface {
+      Run()
     }
 
-    type Closer interface {
-      Close() error
+    type Walking interface {
+      Walk()
     }
 
-    type FileSystemComposition interface {
-      Reader
-      Writer
-      Closer
+
+
+## Trick การตรวจสอบว่า impliment ครบตาม specifies หรือไม่
+
+ความยากของ implicit implement คือเราไม่รู้ว่า impliment ถูกหรือป่าวจะรู้ได้ก็ต่อเมื่อ runtime ทีนี้ทำไง​ ?
+
+มีวิธีดังนี้คือ
+
+1. declare variable เป็น  duck มี type เป็น IDuck
+   
+        var duck IDuck
+
+2. initialize Duck struct จากนั้น assign ให้กับ duck  หากเรา impliment ไม่ครบมันจะด่าทันทีก่อนที่จะ compile อีกเพราะ linter ของ go มันรู้ ฉลาดดี
+
+        duck := &Duck{}
+
+
+ตัวอย่าง
+
+    type IDuck interface {
+      Running
+      Walking
+    }
+
+    type Running interface {
+      Run()
+    }
+
+    type Walking interface {
+      Walk()
+    }
+
+    type Duck struct {}
+
+    func (d *Duck) Run() {}
+
+    function main() {
+      var duck IDuck
+      duck = &Duck{} // linter จะ error ทันทีว่า คุณ ขาด method Walk นะ impliment ด้วย
     }
