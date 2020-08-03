@@ -20,6 +20,8 @@
       A = 5   
       B = &A
 
+
+
 ![](github.com/../pointer.png)
 
 
