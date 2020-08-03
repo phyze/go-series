@@ -3,7 +3,7 @@
 เป็นการสร้าง type ใหม่ขึ้นมาเพื่อนิยามให้ชื่อ type มีความชัดเจนต่อการนำไปใช้งาน 
 
 
-การใช้ custom type ร่วมกับการแปลง Celsius ไปเป็น Fahrenheit 
+การใช้ custom type ร่วมกับการแปลง Celsius ไปเป็น Fahrenheit ซึ่งเป็นการแปลงหน่อยอุญหภูมิ จาก องศาเป็นฟาเรนไฮธ์
 
     type Celsius float
     type Fahrenheit float
