@@ -17,7 +17,7 @@ package ของ go จะโดน load แค่ครั้งเดีย�
 
 
 main file
-
+```go
     package main
 
     import (
@@ -27,13 +27,13 @@ main file
     func main() {
       a.Greet()
     }
-
+```
 a file 
-
+```go
     package a
 
     func Greet() { fmt.Println("hello") }
-
+```
 
 
 
@@ -50,7 +50,7 @@ a file
 alies เป็นการตั้งชื่อ package ใหม่หลังจาก import เข้ามาหรือสามา  รถ ignore ก็ได้
 
 ### new alies
-
+```go
     package main
 
     format "fmt"
@@ -58,10 +58,12 @@ alies เป็นการตั้งชื่อ package ใหม่หล�
     func main() {
       format.Println("hello")
     }
-
+```
 ### ignore package 
 
 นี้ไม่มีไรแค่เติม _ (Underscore) หน้า package ที่ import การ ignore เป็นบอกให้ go ไม่สนใจ package ที่ import มา
 
-    _ "fmt"
+``` go
+   _ "fmt"
+```
 

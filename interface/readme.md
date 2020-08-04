@@ -7,10 +7,11 @@ interface ในภาษา go ถือว่าเป็น type ชนิด
 
 เป็น method ที่ถูก defind ว่าใครก็ตามอยากจะได้การกระทำแบบนี้ต้อง implement ตามนี้เท่านั้นนะ คล้ายกับภาษา OOP อื่นๆ เลยซึ่ง OOP บางภาษายินยอมให้มี body แต่ของ GO ไม่
 
+```go
     type Walking interface{
       Walk()  // <-- signature method
     }
-
+```
 
 ## Implement Implicitly
 
@@ -18,17 +19,17 @@ interface ในภาษา go ถือว่าเป็น type ชนิด
 
 
 ตัวอย่างการ implement Walking interface
-
+```go
     type Duck struct {}
 
     func (d *Duck) Walk() {
       fmt.Println("quack quack walk walk")
     }
-
+```
 
 ตัวอย่าง multiple implement 
 
-
+```go
     type Running interface {
       Run() 
     }
@@ -42,20 +43,21 @@ interface ในภาษา go ถือว่าเป็น type ชนิด
     func (d *Duck) Run() {
       fmt.Println("quack quack run run")
     }
-
+```
 >  Best Practices : การที่ go เป็น implicit impliment การแตก specifies ออกเป็นส่วน ๆ ช่วยให้ง่ายต่อการ implement และลดการ implement แบบไม่จำเป็นออกไปซะ
 
 การเขียน specification ที่ดีในภาษา go interface ควรจะเล็กเท่าที่เป็นไปได้แยกให้มันเป็นแต่ละหน้าที่ของมันเองจากนั้นให้ใช้การ composition รวมแต่ละ interface เข้ามาเป็น interface เดียวกัน
 
 ยกตัวอย่าง 
-
+```go
     type Duck interface {
       Run()
       Walk()
     }
-
+```
 แยกเป็น
 
+```go
     type IDuck interface {
       Running
       Walking
@@ -68,7 +70,7 @@ interface ในภาษา go ถือว่าเป็น type ชนิด
     type Walking interface {
       Walk()
     }
-
+```
 
 
 ## Trick การตรวจสอบว่า impliment ครบตาม specifies หรือไม่
@@ -79,15 +81,18 @@ interface ในภาษา go ถือว่าเป็น type ชนิด
 
 1. declare variable เป็น  duck มี type เป็น IDuck
    
-        var duck IDuck
+```go
+    var duck IDuck
+```
 
-2. initialize Duck struct จากนั้น assign ให้กับ duck  หากเรา impliment ไม่ครบมันจะด่าทันทีก่อนที่จะ compile อีกเพราะ linter ของ go มันรู้ ฉลาดดี
+2. initialize Duck struct จากนั้น assign ให้กับ duck  หากเรา impliment ไม่ครบมันจะด่าทันทีก่อนที่จะ compile อีกเพราะ linter ของ go มันรู้ ฉลาดดี  
 
-        duck := &Duck{}
-
+```go 
+  duck := &Duck{}
+```
 
 ตัวอย่าง
-
+```go
     type IDuck interface {
       Running
       Walking
@@ -109,3 +114,4 @@ interface ในภาษา go ถือว่าเป็น type ชนิด
       var duck IDuck
       duck = &Duck{} // linter จะ error ทันทีว่า คุณ ขาด method Walk นะ impliment ด้วย
     }
+```
