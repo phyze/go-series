@@ -9,7 +9,7 @@
 
 การ initialze ใน go มี 3 แบบดังนี้
 
-1. define variable และถามด้วย Type
+1. define variable และตามด้วย Type
   
         var cat Cat
         cat.Run()
