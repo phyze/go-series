@@ -8,5 +8,4 @@
 - interface
 - package
 - testing
-- concurrent
-- goroutine & channel
+
