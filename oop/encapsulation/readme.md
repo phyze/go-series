@@ -6,7 +6,9 @@
 
 
 ## Exported 
-export คือ การยินยอมให้ภายนอกเรียกใช้งาน member ของ package ได้เฉพาะที่เป็น public เท่านั้น
+export คือ การยินยอมให้ภายนอกเรียกใช้งาน member ใน package 
+
+ซึ่งในตัวอย่างนี้ จะทำการ export ตัวแปรที่ชื่อ Value 
 
 coinPub file 
 
@@ -21,9 +23,9 @@ main file
     package main
 
     func main() {
-    	fmt.Println("before value change : ", coin.Value)
+    	fmt.Println("before value change : ", coinPub.Value)
     	coin.Value = 6
-	    fmt.Println("after value changed : ", coin.Value)
+	    fmt.Println("after value changed : ", coinPub.Value)
     }
     // before value change :  5
     // after value changed :  6
@@ -35,7 +37,9 @@ main file
 การทำให้ member นั้นให้กลายเป็น public ควรพิจรณาก่อนว่าทำไปเพื่ออะไรทำไมต้อง public ถ้าทุก member เป็น public หมดจะทำให้ state หรือ process ทำงานผิดเพี้ยนไปจากสิ่งที่ควรจะเป็น และเป็นช่องว่างในการโจมตีโปรแกรมของเราได้
   
 ## Unexported
-unexport เป็นการปิดการเข้าถึง member ของ package 
+unexport เป็นการปิดการเข้าถึง member ใน package 
+
+ซึ่งในตัวอย่างนี้ จะทำการ unexport ตัวแปรที่ชื่อ value 
 
 coinPrivate file
 

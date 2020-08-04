@@ -4,14 +4,14 @@ import (
 	"fmt"
 
 	coinPrivate "github.com/go-series/oop/encapsulation/private/coin"
-	"github.com/go-series/oop/encapsulation/public/coin"
+	conPub "github.com/go-series/oop/encapsulation/public/coin"
 )
 
 func main() {
 	fmt.Println("------------- public -----------")
-	fmt.Println("before value change : ", coin.Value)
+	fmt.Println("before value change : ", coinPub.Value)
 	coin.Value = 6
-	fmt.Println("after value changed : ", coin.Value)
+	fmt.Println("after value changed : ", coinPub.Value)
 	fmt.Println()
 
 	fmt.Println("------------- private ----------")
