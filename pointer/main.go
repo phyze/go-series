@@ -11,6 +11,11 @@ func main() {
 
 	fmt.Println("-- how to use pointer with struct")
 	howToUsePtrWithStrcut()
+	fmt.Println()
+	
+	fmt.Println("-- dereference pointer")
+	dereference()
+
 }
 
 func printAddress(n int) {
@@ -44,4 +49,12 @@ func howToUsePtrWithStrcut() {
 		ID:     "ACG10101",
 	}
 	fmt.Println(employee)
+}
+
+func dereference() {
+	var number *int
+	a := 5
+	number = &a
+	fmt.Println("before dereference pointer : ", number)
+	fmt.Println("after dereference pointer : ", *number)
 }
