@@ -1,6 +1,6 @@
 # Encapsulation
 
-> หากมีการใช้คำว่า member นั้นหมยถึง behavior และ properties
+> หากมีการใช้คำว่า member นั้นหมยถึง type ทุดชนิดที่อยู่ใต้ package
 
 เป็นการห่อหุ่ม member ไว้ใน package ซึ่งใช้กลไกล public และ private เป็นตัวควบคุมว่า member ไหนที่จะให้ภายนอกเรียกใช้งานได้และ member ไหนที่ต้องซ้อนไว้
 
