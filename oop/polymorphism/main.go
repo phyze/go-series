@@ -3,8 +3,8 @@ package main
 import "fmt"
 
 type PetComposition struct {
-	cat Cat
-	dog Dog
+	Cat Cat
+	Dog Dog
 }
 
 type Dog struct {
@@ -15,13 +15,15 @@ type Cat struct {
 	Name string
 }
 
+
+
 func main() {
 	dog := Dog{Name: "Ivory"}
 	cat := Cat{Name: "Ebony"}
 	petCom := PetComposition{
-		cat: cat,
-		dog: dog,
+		Cat: cat,
+		Dog: dog,
 	}
-	fmt.Println("cat name's ", petCom.cat.Name)
-	fmt.Println("dog name's ", petCom.dog.Name)
+	fmt.Println("cat name's ", petCom.Cat.Name)
+	fmt.Println("dog name's ", petCom.Dog.Name)
 }

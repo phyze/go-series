@@ -7,8 +7,8 @@ Composition  คือ object หนึ่ง ๆ ที่ต้องการ
 
 ```go
 type PetComposition struct {
-	cat Cat
-	dog Dog
+	Cat Cat
+	Dog Dog
 }
 
 type Dog struct {
@@ -27,11 +27,11 @@ func main () {
   dog := Dog{Name: "Ivory"}
 	cat := Cat{Name: "Ebony"}
 	petCom := PetComposition {
-		cat: cat,
-		dog: dog,
+		Cat: cat,
+		Dog: dog,
 	}
-	fmt.Println("cat name's ", petCom.cat.Name)
-	fmt.Println("dog name's ", petCom.dog.Name)
+	fmt.Println("cat name's ", petCom.Cat.Name)
+	fmt.Println("dog name's ", petCom.Dog.Name)
 }
 ```
 
@@ -40,7 +40,7 @@ func main () {
 
 ### **Inheritance**
 
-Inheritance มี relation แบบ is a (เป็น หรือ คือ) ในเวลาเดียวกัน
+Inheritance มี relation แบบ is  (เป็น หรือ คือ) ในเวลาเดียวกัน
 นั้นหมายความว่า ถ้า child object มีการสืบทอดจาก parent object เจ้า child object จะได้ความสามารถทุกอย่างของ parent object มา ตรงนี้แหละที่ทำให้ child object มีคุณลักษณะ สองอย่างพร้อมกัน
 
 ```java
@@ -51,8 +51,21 @@ class Book extends Paper {}
 
 ```
 
-class book สามาเป็นได้ทั้งหนังสือและกระดาษในเวลาเดียวกัน และ 2 class ต้องมีความเกี่ยวโยงซึ่งกันและกันด้วย หมายความว่า paper ต้องสามาเป็นหนังสือได้และ book ต้องสามาเป็นกระดาษได้
+class book สามาเป็นได้ทั้งหนังสือและกระดาษในเวลาเดียวกัน และ 2 class ต้องมีความหมายที่เชื่อมโยงซึ่งกันและกัน หมายความว่า paper ต้องสามากลายเป็นหนังสือได้และ book ต้องสามาเป็นกระดาษได้
 
 ### **Composition**
 
+composition มี relation แบบ has (มี หรือ ประกอบด้วย) นั้นหมายความว่าการที่จะเรียกใช้ object อื่นไม่จำเป็นต้องมีความเกี่ยวข้องหรืออาจจะมีความเกี่ยวข้องกันก็ได้ซึ่งต่างจาก inheritance ที่ต้องมีความหมายที่เชื่อมโยงกัน นี้จึงเป็นข้อดีของ composition ที่มีความยืดยุ่นกว่า inheritance และยังช่วยลด coupling ของ objects อีกด้วย
 
+```go
+
+type Car struct {
+  Engine Engine
+  Wheels  []Wheel
+}
+
+type Engine struct {}
+type Wheel struct {}
+```
+
+สังเกตว่า car  เป็น composition ของ engine และ wheel ซึ่ง struct เหล่านี้ไม่มีความเชื่อโยงกันเลย
