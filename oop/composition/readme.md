@@ -68,4 +68,4 @@ type Engine struct {}
 type Wheel struct {}
 ```
 
-สังเกตว่า car  เป็น composition ของ engine และ wheel ซึ่ง struct เหล่านี้ไม่มีความเชื่อโยงกันเลย
+สังเกตว่า Car เป็น composition ที่ประกอบไปด้วย Engine และ Wheels 
