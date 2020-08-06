@@ -3,7 +3,7 @@
 ในภาษา go นั้นไม่มีการ inheritance เลยแนะนำกลไกลที่คล้ายกับ inheritance 
 
 
-Composition  คือ object หนึ่ง ๆ ที่ต้องการ refer objects มาไว้ที่ ๆ เดียวเพื่อการใช้งานบางสิ่งบางอย่าง
+**Composition**  คือ object หนึ่ง ๆ ที่ต้องการ refer objects มาไว้ที่ ๆ เดียวเพื่อการใช้งาน เราเรียก object เหล่านี้ว่า **component**
 
 ```go
 type PetComposition struct {
@@ -40,7 +40,7 @@ func main () {
 
 ### **Inheritance**
 
-Inheritance มี relation แบบ is  (เป็น หรือ คือ) ในเวลาเดียวกัน
+**Inheritance** มี relation แบบ is  (เป็น หรือ คือ) ในเวลาเดียวกัน
 นั้นหมายความว่า ถ้า child object มีการสืบทอดจาก parent object เจ้า child object จะได้ความสามารถทุกอย่างของ parent object มา ตรงนี้แหละที่ทำให้ child object มีคุณลักษณะ สองอย่างพร้อมกัน
 
 ```java
@@ -55,7 +55,7 @@ class book สามาเป็นได้ทั้งหนังสือแ
 
 ### **Composition**
 
-composition มี relation แบบ has (มี หรือ ประกอบด้วย) นั้นหมายความว่าการที่จะเรียกใช้ object อื่นไม่จำเป็นต้องมีความเกี่ยวข้องหรืออาจจะมีความเกี่ยวข้องกันก็ได้ซึ่งต่างจาก inheritance ที่ต้องมีความหมายที่เชื่อมโยงกัน นี้จึงเป็นข้อดีของ composition ที่มีความยืดยุ่นกว่า inheritance และยังช่วยลด coupling ของ objects อีกด้วย
+**composition** มี relation แบบ has (มี หรือ ประกอบด้วย) นั้นหมายความว่าการที่จะเรียกใช้ object อื่นไม่จำเป็นต้องมีความเกี่ยวข้องหรืออาจจะมีความเกี่ยวข้องกันก็ได้ซึ่งต่างจาก inheritance ที่ต้องมีความหมายที่เชื่อมโยงกัน นี้จึงเป็นข้อดีของ composition ที่มีความยืดยุ่นกว่า inheritance และยังช่วยลด coupling ของ objects อีกด้วย
 
 ```go
 
@@ -68,4 +68,3 @@ type Engine struct {}
 type Wheel struct {}
 ```
 
-สังเกตว่า Car เป็น composition ที่ประกอบไปด้วย Engine และ Wheels 
