@@ -3,7 +3,7 @@
 ในภาษา go นั้นไม่มีการ inheritance เลยแนะนำกลไกลที่คล้ายกับ inheritance 
 
 
-**Composition**  คือ object หนึ่ง ๆ ที่ต้องการ refer objects มาไว้ที่ ๆ เดียวเพื่อการใช้งาน เราเรียก object เหล่านี้ว่า **component**
+**Composition**  คือ object หนึ่ง ๆ ที่ต้องการ refer objects มาไว้ที่ ๆ เดียวเพื่อนำมาใช้งาน
 
 ```go
 type PetComposition struct {

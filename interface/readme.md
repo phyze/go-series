@@ -85,7 +85,7 @@ interface ในภาษา go ถือว่าเป็น type ชนิด
     var duck IDuck
 ```
 
-2. initialize Duck struct จากนั้น assign ให้กับ duck  หากเรา impliment ไม่ครบมันจะด่าทันทีก่อนที่จะ compile อีกเพราะ linter ของ go มันรู้ ฉลาดดี  
+2. initialize Duck struct จากนั้น assign ให้กับ duck  หากเรา impliment ไม่ครบมันจะด่าทันทีก่อนที่จะ compile อีกเพราะ linter ของ go มันรู้ ฉลาดดี  และ type interface รับเป็น pointer
 
 ```go 
   duck := &Duck{}
