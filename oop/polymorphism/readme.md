@@ -61,5 +61,5 @@ func main() {
 ```
 
 สังเกตว่า  variable rectangle และ circle ประกาศเป็น type Shape ซึ่งถูก assign ด้วย type struct  rectangle ก็รับ type Rectangle และ 
-circle ถูก assign ด้วย type Circle ทีนี้สังเกตว่าทั้ง rectangle และ circle เรียก method Draw() ถึงเวลาจะชื่อเหมือนกันแต่การทำงานต่างกัน
+circle ถูก assign ด้วย type Circle ทีนี้สังเกตว่าทั้ง rectangle และ circle เรียก method Draw() ถึงชื่อเหมือนกันแต่การทำงานต่างกัน
 
