@@ -1,26 +1,52 @@
 # Abstraction
 
-เป็นการแสดงรายละเอียดข้อมูลหรือการทำงานที่จำเป็นสำหรับการใช้งานและซ้อนสิ่งที่ไม่ได้ใช้ไว้ภายในเพื่อลดความซับซ้อนลงและนำไปใช้งานงานโดยไม่ตองสนใจว่าข้างหลังมันมีการทำงานหรือข้อมูลอะไรอยู่บ้าง 
+เป็นการแสดงรายละเอียดข้อมูลหรือการทำงานที่จำเป็นสำหรับการใช้งานและซ้อนสิ่งที่ไม่ได้ใช้ไว้ภายในเพื่อลดความซับซ้อนลงและนำไปใช้งานงานโดยไม่ตองสนใจว่าข้างหลังว่ามันมีการทำงานหรือข้อมูลอะไรอยู่บ้าง 
 
+abstraction/animal
 
-    type Animal interface {
+```go
+    package animal 
+    
+    type IMammal interface {
       Eat() 
       Sound() string
-      MakeSound()
+      MakeSound(mammalType string) string
     }
 
-
-    type abstractAnimalSound struct {}
-
-    func (aa *abstractAnimalSound) MakeSound(type string) {
-
+    type Mammal struct {
+      abstractMammalSound
     }
 
-    type Dog struct {
-      abstractAnimalSound
+    type abstractMammalSound struct {}
+    func (am *abstractMammalSound) MakeSound(mammalType string) string {
+      switch {
+        case mammalType == "dog" :
+          return "hok hok hok !!!"
+        default :
+          return ""
+      }
     }
 
-    func (d *Dog) Eat() { ... }
+```
 
-    func (d *Dog) Sound() string 
+abstraction/animal/pet
 
+```go 
+  package pet
+
+  type IPet interface {
+    animal.IMammal
+  }
+
+  func NewDog() IPet {
+    return &dog{}
+  }
+
+  type dog struct {}
+  
+  func (d *dog) Sound() string {
+    return d.MakeSound("dog")
+  }
+
+  func (d *dog) Eat() {}
+```
