@@ -31,7 +31,7 @@ func main () {
 		Dog: dog,
 	}
 	fmt.Println("cat name's ", petCom.Cat.Name)
-	fmt.Println("dog name's ", petCom.Dog.Name)
+	fmt.Println("pet name's ", petCom.Dog.Name)
 }
 ```
 
