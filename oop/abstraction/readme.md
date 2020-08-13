@@ -28,8 +28,11 @@ abstraction/animal
           return ""
       }
     }
-
 ```
+
+   1. define IMammal เป็น interface ให้มี behavior คือ กิน, ส่งเสียง , และ ทำเสียง
+  2. defind Mammal struct ขึ้นมาเพื่อนำไปใช้ต่อเพื่อซ้อนความซับซ้อนไว้ใน Mammal โดยภายใน struct Mammal นั้นมีการใช้ composite ด้วยการนำ  abstractMammalSound ซึ่งเป็น struct เข้ามาไว้ใน Mammal เพื่อซ้อนความซับซ้อนการทำงานไว้ภายใต้ Mammal 
+  3. define abstractMammalSound เป็น struct และ implement logic ที่เรียกกับการทำเสียงของสัตว์แต่ละประเภท
 
 abstraction/animal/pet
 
@@ -53,6 +56,10 @@ abstraction/animal/pet
   func (d *dog) Eat() {}
 ```
 
+1. define IPet เป็น interface และใช้การ composite ฝัง animal.IMammal  ไว้ภายใน IPet เพื่อเป็นการบอกว่า IPet จะต้องมี behavior เหมือนกับ IMammal นะ เช่น Eat , Sound และ MakeSound
+2. ทำการสร้าง Constructor ให้กับ struct dog และ มี return type เป็น IPet ซึ่งเป็น interface คนที่ได้รับ instance ของ dog ไปจะสามารถมองเห็น method ที่มีการประกาศไว้ใน IPet เท่านั้น
+3. สร้าง struct dog และ implement method ตาม specification ของ IPet คือ method Sound และ Eat ให้สังเกตที่ method Sound จะมีการเรียกใช้ MakeSound() ภายใต้ method Sound เพื่อเป็นการซ้อนความ complex และ สิ่งที่ไม่จำเป็นที่ end user จะต้องรู้
+   
 
 ## abstraction แตกต่างจาก encapsulation อย่างไร
 
