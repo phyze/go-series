@@ -60,6 +60,16 @@ abstraction/animal/pet
 2. ทำการสร้าง Constructor ให้กับ struct dog และ มี return type เป็น IPet ซึ่งเป็น interface คนที่ได้รับ instance ของ dog ไปจะสามารถมองเห็น method ที่มีการประกาศไว้ใน IPet เท่านั้น
 3. สร้าง struct dog และ implement method ตาม specification ของ IPet คือ method Sound และ Eat ให้สังเกตที่ method Sound จะมีการเรียกใช้ MakeSound() ภายใต้ method Sound เพื่อเป็นการซ้อนความ complex และ สิ่งที่ไม่จำเป็นที่ end user จะต้องรู้
    
+```go 
+  package main
+  func main() {
+    pet := pet.NewDog()
+    fmt.Println(dog.Sound())
+  }
+
+```
+
+> หากใครอยากทดลองเล่นดูให้ทำการสร้าง Cat struct ดูนะครับโดยดู dog เป็นตัวอย่าง
 
 ## abstraction แตกต่างจาก encapsulation อย่างไร
 
