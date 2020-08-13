@@ -8,4 +8,4 @@
 - [interface](github.com/../interface)
 - [package](github.com/../package)
 - [testing](github.com/../testing)
-- [OOP](github.com/../oop/readme.md)
+- [OOP](github.com/../oop)

@@ -2,9 +2,9 @@
 
 ## table of content
 
-###  [Constructor](constructor/readme.md)
-### [Composition](composition/readme.md)
-###  [Encapsulation](encapsulation/readme.md)
-### [Abstraction](abstraction/readme.md)
-### [MethodOverriding](methodOverriding/readme.md)
-### [Polymorphism](polymorphism/readme.md)
+###  [Constructor](constructor)
+### [Composition](composition)
+###  [Encapsulation](encapsulation)
+### [Abstraction](abstraction)
+### [MethodOverriding](methodOverriding)
+### [Polymorphism](polymorphism)
