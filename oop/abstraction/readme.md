@@ -50,3 +50,9 @@ abstraction/animal/pet
 
   func (d *dog) Eat() {}
 ```
+
+
+## abstraction แตกต่างจาก encapsulation อย่างไร
+
+### Abstraction 
+  เป็นการ focus ที่ high-level design โดย object จะไม่สนใจรายละเอียดหรือการทำงานที่มีการเจาะจงในบางอย่าง ซึ่ง object จะสนใจแค่ว่า มีการดำเนินการอะไรบ้าง มีข้อมูลอะไรบ้างที่ต้องอยู่ภายใต้ object
