@@ -81,12 +81,90 @@ function hello :
 
 ## Channel
 
-ปัญหามีอยู่ว่า หากโปรแกรมของเรามีการใช้ goroutine หลาย ๆ goroutine แต่ละตัวก็จะมีการทำงานที่แตกต่างกันและ goroutine เหล่านั้นต้องการที่จะแลกเปลียน  data กันละจะมีวิธีทำให้ goroutines แลกเปลียนกันได้ไหม ? 
+ปัญหามีอยู่ว่า หากโปรแกรมของเรามีการใช้ goroutine หลาย ๆ goroutine แต่ละตัวก็จะมีการทำงานที่แตกต่างกันและ goroutine เหล่านั้นต้องการที่จะแลกเปลียน  data กันแล้วจะมีวิธีทำให้ goroutines แลกเปลียนข้อมูลกันได้ไหม ? 
 
 ปัญหานี้แก้ด้วยการใช้ chan ที่ย่อมาจาก channel
 
+channel คือที่ ๆ หนึ่งที่ให้ goroutines สามารถแลกเปลียนข้อมูลกัน นึกถึงนาย A ใช้มือถือโทรหา  นาย B เมื่อนาย B รับสายทั้งนาย A และ B สามารถพูดคุยสื่อสารกันได้ทั้งสองฝ่ายสามารถได้ยินเสียงของกันและกัน ซึ่งเหมือนกับความสามารถของ Channel ในภาษา go 
 
-channel คือที่ ๆ หนึ่งที่ให้ goroutines สามารถแลกเปลียนข้อมูลกัน    
+โดย go มี slogan ว่า
 
-**ยกตัวอย่าง**   
-สถานีปล่อยน้ำปะปา น้ำที่ถูกปล่อยจากสถานีจะไหลไปตามท่อของกรมปะปา บ้านไหนที่ได้ต่อท่อกับทางกรมปะปาจะได้รับน้ำปะปาไป channel ก็คล้ายกัน
+> Do not communicate by sharing memory; instead, share memory by communicating.
+
+หมายความว่า อย่าติดต่อสือสารกันจากการใช้ sharing memory แต่ให้ใช้การ share memory จากการสือสารแทน
+
+เรามาแกะประโยคด้านบนกันดีกว่าว่ามันหมายถึงอะไร  
+
+ในภาษา java, c++, python และหลาย ๆ ภาษาที่มีกลไกในการใช้ share memory เพื่อแลกเปลียนข้อมูลกันระหว่าง processes สิ่งที่น่ากลัวที่สุดของกลไกนี้คือ deadlock จากการ read/write resource ที่ ๆ เดียวกันจึงเกิดขึ้นง่ายมากผู้ใช้งานจำเป็นต้องมีความเชี่ยวชาญเพราะการ manage process ค่อนข้างยากส่วนมากจะพบการ deadlock ใน concurrency programming ทีนี้ผู้พัฒนาภาษา go จึงใช้กลไก channel เพื่อใช้ในการแลกเปลียนข้อมูลกันผ่านช่องทางการสือสาร (share memory by communicating) แทนการ communicate by sharing memory 
+
+![](github.com/../sharingMemo.png)
+
+
+channel แบ่งออกเป็น 2 ชนิด คือ
+1. UnBuffered 
+2. Buffered
+   
+Unbuffered 
+
+
+คุณสมบัติของการสื่อสารแบ่งได้ออกเป็น 2 ชนิด 
+
+1. Two way communication
+2. One way communication
+
+
+**Two way communication**    
+ชนิดนี้สามารถส่งและรับใน channel เดียวกัน   
+
+**example**   
+```go 
+package main
+
+import (
+	"fmt"
+	"sync"
+)
+
+type twoWay struct {
+	hello string
+	world string
+}
+
+func hello(pipe chan *twoWay, wg *sync.WaitGroup) {
+	defer wg.Done()
+	v := <- pipe
+	v.hello = "hello"
+	pipe <- v
+}
+
+func world(pipe chan *twoWay, wg *sync.WaitGroup){
+	defer wg.Done()
+	v := <- pipe
+	v.world = "world"
+	pipe <- v
+}
+
+func main() {
+	wg := &sync.WaitGroup{}
+	pipe := make(chan *twoWay,1)
+
+	//send twoWay for init
+	pipe <- &twoWay{
+		hello: "",
+		world: "",
+	}
+
+	wg.Add(2)
+	go hello(pipe,wg)
+	go world(pipe,wg)
+	wg.Wait()
+	fmt.Println(<- pipe)
+}
+
+```
+
+จากตัวอย่างด้านบน เห็นว่ามีการแบ่ง hello และ world ที่เป็น function ทำหน้าที่ assign "hello" และ "world" เข้าไปใน chan *twoWay   
+กลับมาที่ main  
+
+
+One way communication  สามารถใช้ได้แค่ รับ หรือ ส่ง เท่านั้นและต้องมีการ define ที่ชัดเจน โดยใช้เครื่องหมาย <- 
