@@ -5,38 +5,19 @@ import (
 	"sync"
 )
 
-type twoWay struct {
-	hello string
-	world string
-}
-
-func hello(pipe chan *twoWay, wg *sync.WaitGroup) {
+func helloMike(pipe chan   string, wg *sync.WaitGroup) {
 	defer wg.Done()
-	v := <- pipe
-	v.hello = "hello"
-	pipe <- v
-}
-
-func world(pipe chan *twoWay, wg *sync.WaitGroup){
-	defer wg.Done()
-	v := <- pipe
-	v.world = "world"
-	pipe <- v
+	if s := <- pipe ; s == "Hello Mike" {
+		pipe <- "Hi"
+	}
 }
 
 func main() {
 	wg := &sync.WaitGroup{}
-	pipe := make(chan *twoWay,1)
-
-	//send twoWay for init
-	pipe <- &twoWay{
-		hello: "",
-		world: "",
-	}
-
-	wg.Add(2)
-	go hello(pipe,wg)
-	go world(pipe,wg)
+	pipe := make(chan string,1)
+	wg.Add(1)
+	pipe <- "Hello Mike"
+	go helloMike(pipe,wg)
 	wg.Wait()
-	fmt.Println(<- pipe)
+	fmt.Println(<-pipe)
 }

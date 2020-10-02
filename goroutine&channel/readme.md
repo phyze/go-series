@@ -85,27 +85,23 @@ function hello :
 
 ปัญหานี้แก้ด้วยการใช้ chan ที่ย่อมาจาก channel
 
-channel คือที่ ๆ หนึ่งที่ให้ goroutines สามารถแลกเปลียนข้อมูลกัน นึกถึงนาย A ใช้มือถือโทรหา  นาย B เมื่อนาย B รับสายทั้งนาย A และ B สามารถพูดคุยสื่อสารกันได้ทั้งสองฝ่ายสามารถได้ยินเสียงของกันและกัน ซึ่งเหมือนกับความสามารถของ Channel ในภาษา go 
+channel นั้นคล้ายกับท่อที่ให้ goroutine สามารถแลกเปลียนข้อมูลระหว่างกันได้โดยใช้  <- (arrow) และ channel ยังมีคุณสมบัติ FIFO (First-in First-out) ซึ่งนั้นทำให้ dev ไม่ต้องกังวลกับ data race 
 
-โดย go มี slogan ว่า
-
-> Do not communicate by sharing memory; instead, share memory by communicating.
-
-หมายความว่า อย่าติดต่อสือสารกันจากการใช้ sharing memory แต่ให้ใช้การ share memory จากการสือสารแทน
-
-เรามาแกะประโยคด้านบนกันดีกว่าว่ามันหมายถึงอะไร  
-
-ในภาษา java, c++, python และหลาย ๆ ภาษาที่มีกลไกในการใช้ share memory เพื่อแลกเปลียนข้อมูลกันระหว่าง processes สิ่งที่น่ากลัวที่สุดของกลไกนี้คือ deadlock จากการ read/write resource ที่ ๆ เดียวกันจึงเกิดขึ้นง่ายมากผู้ใช้งานจำเป็นต้องมีความเชี่ยวชาญเพราะการ manage process ค่อนข้างยากส่วนมากจะพบการ deadlock ใน concurrency programming ทีนี้ผู้พัฒนาภาษา go จึงใช้กลไก channel เพื่อใช้ในการแลกเปลียนข้อมูลกันผ่านช่องทางการสือสาร (share memory by communicating) แทนการ communicate by sharing memory 
-
-![](github.com/../sharingMemo.png)
+![](github.com/../channel.jpg)
 
 
 channel แบ่งออกเป็น 2 ชนิด คือ
 1. UnBuffered 
 2. Buffered
    
-Unbuffered 
+**Unbuffered**    
+เป็นวิธีการอย่างหนึ่งของ channel ที่ไม่มีการกำหนดขนาด (size) ของ channel เนืองจากการใช้ unbuffered จำเป็นต้องแน่ใจว่า sender ส่งค่าเข้าไปใน channel จำเป็นต้องมี receiver ที่ค่อยนำค่าออกมาไม่อย่างนั้นจะเกิด deadlock เพราะว่า receiver จะ block process จนกว่านำค่าออกจาก channel ได้ หรือไม่มี receiver ก็จะ deadlock เช่นกัน
 
+**Buffered**   
+เป็นการเก็บค่าฝากไว้บน ram ชั่วคราวซึ่งจำนวนที่สามารถเก็บได้นั้นขึ้นอยู่กับการกำหนดตอนสร้าง channel ขึ้น ไม่มีการ block process แต่จะเกิด deadlock ขึ้นตอนที่ channel นั้นเต็ม หรือ ไม่มี receiver ก็จะเกิด deadlockเช่นกัน
+ 
+ 
+ 	การเลือกใช้ ประเภทของ chanal ก็ขึ้นอยู่กับงาน ถ้างานที่มี data  sensitive ที่ไม่ควรหาย ควรเลือกใช้ unbuffered เพราะว่า ค่าที่เข้าไปใน channel จำเป็นต้องนำออกมาทันทีโดยไม่มีการ hold ไว้ใน memory 
 
 คุณสมบัติของการสื่อสารแบ่งได้ออกเป็น 2 ชนิด 
 
@@ -114,7 +110,7 @@ Unbuffered
 
 
 **Two way communication**    
-ชนิดนี้สามารถส่งและรับใน channel เดียวกัน   
+channel ชนิดนี้สามารถส่งและรับใน channel เดียวกันสามารถประกาศเป็น func A(c chan string)  signature function แสดงถึงเป็น two way communication
 
 **example**   
 ```go 
@@ -125,46 +121,58 @@ import (
 	"sync"
 )
 
-type twoWay struct {
-	hello string
-	world string
-}
-
-func hello(pipe chan *twoWay, wg *sync.WaitGroup) {
+func helloMike(pipe chan   string, wg *sync.WaitGroup) {
 	defer wg.Done()
-	v := <- pipe
-	v.hello = "hello"
-	pipe <- v
-}
-
-func world(pipe chan *twoWay, wg *sync.WaitGroup){
-	defer wg.Done()
-	v := <- pipe
-	v.world = "world"
-	pipe <- v
+	if s := <- pipe ; s == "Hello Mike" {
+		pipe <- "Hi"
+		return 
+	}
+	pipe <- ""
 }
 
 func main() {
 	wg := &sync.WaitGroup{}
-	pipe := make(chan *twoWay,1)
-
-	//send twoWay for init
-	pipe <- &twoWay{
-		hello: "",
-		world: "",
-	}
-
-	wg.Add(2)
-	go hello(pipe,wg)
-	go world(pipe,wg)
+	pipe := make(chan string,1)
+	wg.Add(1)
+	pipe <- "Hello Mike"
+	go helloMike(pipe,wg)
 	wg.Wait()
-	fmt.Println(<- pipe)
+	fmt.Println(<-pipe)
+}
+```
+
+main ทำการส่ง message "Hello Mike" เข้าไปใน chan pipe จากนั้นทำการ แตก function helloMike  ด้วย goroutine    
+ภายใน function helloMike จะทำการตรวจสอบว่า message ที่เข้ามาใช้  "Hello Mike" หรือป่าว ถ้าใช้ให้ตอบ Hi กลับ หากค่าที่ส่งมาไม่ใช่ จะทำการ return empty string  
+
+
+**One way  communication**   
+channel ชนิดนี้สามารถทำได้แค่ รับ หรือ ส่ง อย่างใดอย่างหนึ่งเท่านั้น สามารถประกาศเป็น   
+ funcA(c chan <- string) ส่งอย่างเดียว , funcB(c <- chan string) รับอย่างเดียว
+
+```go 
+package main
+
+import (
+	"fmt"
+	"sync"
+)
+
+func greet(pipe chan<- string) {
+	pipe <- "Hi Puge"
+}
+
+func hiPuge(pipe <-chan string) {
+	if s := <-pipe; s == "Hi Puge" {
+		fmt.Println(s)
+	}
+}
+
+func main() {
+	pipe := make(chan string)
+	go greet(pipe)
+	hiPuge(pipe)
 }
 
 ```
 
-จากตัวอย่างด้านบน เห็นว่ามีการแบ่ง hello และ world ที่เป็น function ทำหน้าที่ assign "hello" และ "world" เข้าไปใน chan *twoWay   
-กลับมาที่ main  
-
-
-One way communication  สามารถใช้ได้แค่ รับ หรือ ส่ง เท่านั้นและต้องมีการ define ที่ชัดเจน โดยใช้เครื่องหมาย <- 
+สังเกตว่า มี 2 function ที่เป็น รับ และ ส่ง แยกกัน ซึ่ง funcion ที่ทำหน้าที่ส่งคือ greet ส่วน function ที่รับคือ hiPuge หากมีการส่ง channel ผิดประเภท ตัว linter จะแจ้งว่า invalid operation
