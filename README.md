@@ -8,4 +8,5 @@
 - [interface](github.com/../interface)
 - [package](github.com/../package)
 - [testing](github.com/../testing)
+- [goroutine & channel](github.com/../goroutine&channel)
 - [OOP](github.com/../oop)
