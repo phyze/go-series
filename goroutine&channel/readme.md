@@ -142,7 +142,7 @@ func main() {
 ```
 
 main ทำการส่ง message "Hello Mike" เข้าไปใน chan pipe จากนั้นทำการ แตก function helloMike  ด้วย goroutine    
-ภายใน function helloMike จะทำการตรวจสอบว่า message ที่เข้ามาใช้  "Hello Mike" หรือป่าว ถ้าใช้ให้ตอบ Hi กลับ หากค่าที่ส่งมาไม่ใช่ จะทำการ return empty string  
+ภายใน function helloMike จะทำการตรวจสอบว่า message ที่เข้ามาใช่  "Hello Mike" หรือป่าว ถ้าใช่ให้ตอบ Hi กลับ หากค่าที่ส่งมาไม่ใช่ จะทำการ return empty string  
 
 
 **One way  communication**   
