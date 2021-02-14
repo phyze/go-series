@@ -15,33 +15,39 @@ func pick(s []string) func(pick string) []string {
 }
 
 func main() {
-	//-------------------------
-	fmt.Println("anonymous function")
-	anonymous := func() {
+	//anonymous function
+	func() {
 		fmt.Println("i'm anonymous function")
+	}()
+	fmt.Println()
+
+	// 1 st class function
+	anonymous := func() {
+		fmt.Println("i'm 1st class function")
 	}
 	anonymous()
 	fmt.Println()
 
-	//-------------------------
-	fmt.Println("pass arg to anonymous function")
+	// 1 st class function with arg
 	greet := func(name string) {
-		fmt.Println("hello", name)
+		fmt.Println("1st class function pass arg : ","hello", name)
 	}
 	greet("naomi scott")
 	fmt.Println()
 
-	//-------------------------
-	fmt.Println("pass arg to anonymous function and return result")
+	// 1 st class function with arg and return result
+
 	resutl := func(a, b int) int {
 		return a + b
 	}(1, 2)
-	fmt.Println("1 + 2 = ", resutl)
+	fmt.Println("pass arg to 1st class function and return result : ","1 + 2 = ", resutl)
 	fmt.Println()
 
-	//-------------------------
+	// higher order function with return function
 	fmt.Println("higher order function")
 	s := []string{"a", "a", "b", "c", "d", "d", "e"}
 	picked := pick(s)("a")
 	fmt.Println(picked)
+	fmt.Println()
+
 }
